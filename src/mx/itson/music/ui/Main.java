@@ -30,6 +30,22 @@ public class Main {
         a.setGénero(Género.OTRO);
         
         List<Canción> canciones = new ArrayList<>();
+        
+        Canción canción1 = new Canción();
+         canción1.setNombre("DTMF");
+         canción1.setOrden(1);
+         canción1.setDuración(237);
+         
+         Canción canción2 = new Canción();
+         canción2.setNombre("Mudanza");
+         canción2.setOrden(2);
+         canción2.setDuración(213);
+         
+         
+        canciones.add(canción1);
+        canciones.add(canción2);
+        
+        a.setCanciones(canciones);
        
         
     }

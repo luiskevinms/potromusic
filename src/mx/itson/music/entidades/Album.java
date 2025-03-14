@@ -13,6 +13,8 @@ import mx.itson.music.enums.Género;
  */
 public class Album {
 
+    
+
     /**
      * @return the nombre
      */
@@ -58,8 +60,8 @@ public class Album {
     /**
      * @return the canción
      */
-    public List<Canción> getCanción() {
-        return canción;
+    public List<Canción> getCanciones() {
+        return canciones;
     }
 
     /**
@@ -87,6 +89,11 @@ public class Album {
     private Artista artista;
     private int lanzamiento;
     private List<Canción> canción;
+    private List<Canción> canciones;
     private Género género;
+
+    public void setCanciones(List<Canción> canciones) {
+        this.canciones = canciones;
+    }
     
 }
