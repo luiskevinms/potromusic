@@ -6,6 +6,7 @@ package mx.itson.music.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import mx.itson.music.entidades.Album;
 import mx.itson.music.entidades.Artista;
 import mx.itson.music.entidades.Canción;
@@ -18,16 +19,36 @@ import mx.itson.music.enums.Género;
 public class Main {
     
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         
+        //Solicitud de datos del Artista
         Artista artista = new Artista();
-        artista.setNombre("Bad Bunny");
-        artista.setSitioWeb("www.badbunny.com");
+        System.out.println("Ingrese el nombre del Artista: ");
+        artista.setNombre(scanner.nextLine());
+        System.out.println("Ingrese el Sitio Web del Artista: ");
+        artista.setSitioWeb(scanner.nextLine());
         
+        
+        //Solicitud de datos del Album
         Album a = new Album();
-        a.setNombre("Debí tirar más fotos");
-        a.setLanzamiento(2025);
-        a.setArtista(artista);
-        a.setGénero(Género.OTRO);
+        System.out.println("Ingrese el nombre del Album: ");
+        a.setNombre(scanner.nextLine());
+        System.out.println("Ingrese el año de lanzamiento del Album: ");
+        a.setLanzamiento(scanner.nextInt());
+        
+        //Solicitar Género
+        System.out.println("Ingrese el género del álbum (Pop, Rock, Dance, Salsa, Otro): ");
+        String generoIngresado = scanner.nextLine().toUpperCase(); //.toUpperCase porque los enums están en Mayusculas
+        Género genero;
+
+        try {
+            genero = Género.valueOf(generoIngresado);
+        } catch (IllegalArgumentException e) {
+            genero = Género.OTRO; // Si el usuario escribe algo incorrecto, se asigna "OTRO" por defecto
+        }
+
+        a.setGénero(genero);
+
         
         List<Canción> canciones = new ArrayList<>();
         
