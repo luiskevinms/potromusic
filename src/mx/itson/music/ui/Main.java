@@ -33,41 +33,62 @@ public class Main {
         Album a = new Album();
         System.out.println("Ingrese el nombre del Album: ");
         a.setNombre(scanner.nextLine());
-        System.out.println("Ingrese el año de lanzamiento del Album: ");
-        a.setLanzamiento(scanner.nextInt());
         
-        //Solicitar Género
-        System.out.println("Ingrese el género del álbum (Pop, Rock, Dance, Salsa, Otro): ");
-        String generoIngresado = scanner.nextLine().toUpperCase(); //.toUpperCase porque los enums están en Mayusculas
-        Género genero;
+         // Solicitar el año de lanzamiento con manejo de excepciones
+        int añoLanzamiento = 0;
+        boolean añoValido = false;
 
-        try {
-            genero = Género.valueOf(generoIngresado);
-        } catch (IllegalArgumentException e) {
-            genero = Género.OTRO; // Si el usuario escribe algo incorrecto, se asigna "OTRO" por defecto
+        while (!añoValido) {
+            try {
+                System.out.println("Ingrese el año de lanzamiento del Album: ");
+                añoLanzamiento = scanner.nextInt();
+                a.setLanzamiento(añoLanzamiento);
+                scanner.nextLine();  // Se agrega un salto de linea después de un nextInt 
+                añoValido = true;  // Año válido, salir del bucle
+            } catch (Exception e) {
+                System.err.println("El año de lanzamiento debe ser un número entero.");
+                scanner.nextLine();  // Limpiar el buffer
+            }
         }
 
-        a.setGénero(genero);
-
-        
+        //Solicitar canciones
         List<Canción> canciones = new ArrayList<>();
         
-        Canción canción1 = new Canción();
-         canción1.setNombre("DTMF");
-         canción1.setOrden(1);
-         canción1.setDuración(237);
-         
-         Canción canción2 = new Canción();
-         canción2.setNombre("Mudanza");
-         canción2.setOrden(2);
-         canción2.setDuración(213);
-         
-         
-        canciones.add(canción1);
-        canciones.add(canción2);
+        String otraCancion;
+        int orden = 1;
+        
+        do{
+            Canción canción = new Canción();
+            System.out.println("Ingrese el nombre de la canción ");
+            canción.setNombre(scanner.nextLine());
+            
+            System.out.println("Ingrese la duración de la canción en segundos ");
+            canción.setDuración(scanner.nextInt());
+            scanner.nextLine(); //Se agregó otra vez salto de linea después de usar un nextInt 
+            
+            canción.setOrden(orden++);
+            canciones.add(canción);
+            
+            System.out.println("Si desea agregar otra canción presione 's', si desea dejar de agregar presione 'n':  ");
+            otraCancion = scanner.nextLine();
+            
+        }while (otraCancion.equals("s"));
         
         a.setCanciones(canciones);
        
+        //Mostrar datos del artista, del album y la lista de las canciones
+        System.out.println("    Datos del Artista");
+        System.out.println("Nombre del Artista: " + artista.getNombre());
+        System.out.println("Sitio Web del Artista: " + artista.getSitioWeb());
+
+        System.out.println("    Datos del Álbum");
+        System.out.println("Nombre del Álbum: " + a.getNombre());
+        System.out.println("Año de Lanzamiento: " + a.getLanzamiento());
+
+        System.out.println("    Lista de Canciones");
+        for (Canción cancion : a.getCanciones()) {
+            System.out.println("Orden: " + cancion.getOrden() + " - Nombre: " + cancion.getNombre() + " - Duración: " + cancion.getDuración() + " segundos");
         
     }
+}
 }
